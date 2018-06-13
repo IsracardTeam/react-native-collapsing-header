@@ -16,12 +16,20 @@ class CollapsingHeader extends Component {
         // scrolling distance
         this.HEADER_SCROLL_DISTANCE = props.headerMaxHeight - props.headerMinHeight
         this.state = {
-            scrollY: new Animated.Value(0)
+            scrollY: new Animated.Value(0),
+            showScrollShadow: false
         }
     }
 
     onScroll = (event) => {
 
+        const { showScrollShadow } = this.state;
+        const { y } = event.nativeEvent.contentOffset;
+
+        if (y > 1 && !showScrollShadow)
+            this.setState({ showScrollShadow: true });
+        else if (y <= 1 && showScrollShadow)
+            this.setState({ showScrollShadow: false });
     }
 
 
@@ -29,12 +37,6 @@ class CollapsingHeader extends Component {
         const headerPosition = this.state.scrollY.interpolate({
             inputRange: [0, this.HEADER_SCROLL_DISTANCE],
             outputRange: [0, - this.HEADER_SCROLL_DISTANCE],
-            extrapolate: 'clamp' // clamp so translateY can’t go beyond -160
-        })
-
-        const paddingSize = this.state.scrollY.interpolate({
-            inputRange: [0, this.HEADER_SCROLL_DISTANCE],
-            outputRange: [this.props.headerMaxHeight, this.props.headerMinHeight],
             extrapolate: 'clamp' // clamp so translateY can’t go beyond -160
         })
 
@@ -46,7 +48,7 @@ class CollapsingHeader extends Component {
 
         return (
             <Animated.View style={[styles.container]}>
-                <Animated.View style={[styles.header,{height: this.props.headerMaxHeight},
+                <Animated.View style={[styles.header,{height: this.props.headerMaxHeight, shadowOpacity: this.state.showScrollShadow ? 1 : 0, elevation: this.state.showScrollShadow ? 7 : 0},
                     {transform: [{
                         translateY: headerPosition
                     }]
@@ -79,7 +81,8 @@ class CollapsingHeader extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'column'
+      flexDirection: 'column',
+      zIndex: 1
     },
     header: {
         position: 'absolute',
@@ -95,8 +98,8 @@ const styles = StyleSheet.create({
           height: 0
         },
         shadowRadius: 4,
-        shadowOpacity: 1,
-        elevation: 7
+        // shadowOpacity: 1,
+        // elevation: 7
     },
     contentContainer: {
         width,
