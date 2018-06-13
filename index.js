@@ -57,6 +57,11 @@ class CollapsingHeader extends Component {
                 </Animated.View>
 
                     <Animated.ScrollView
+                        ref={(ref)=>{
+                            if(ref && this.props.scrollViewRef) {
+                                this.props.scrollViewRef(ref)
+                            }
+                        }}
                         contentContainerStyle={[{paddingTop: this.props.headerMaxHeight},this.props.contentContainerStyle]}
                         scrollIndicatorInsets={{
                             top: this.props.headerMaxHeight
