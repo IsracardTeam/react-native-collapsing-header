@@ -45,7 +45,7 @@ class CollapsingHeader extends Component {
         })
 
         return (
-            <Animated.View style={[styles.container,{paddingTop: paddingSize}]}>
+            <Animated.View style={[styles.container]}>
                 <Animated.View style={[styles.header,{height: this.props.headerMaxHeight},
                     {transform: [{
                         translateY: headerPosition
@@ -55,14 +55,14 @@ class CollapsingHeader extends Component {
                 </Animated.View>
 
                     <Animated.ScrollView
-                        //contentContainerStyle={[{paddingTop: this.props.headerMaxHeight},this.props.contentContainerStyle]} 
+                        contentContainerStyle={[{paddingTop: this.props.headerMaxHeight},this.props.contentContainerStyle]} 
                         scrollEventThrottle={this.props.scrollEventThrottle}
                         bounces={false}
                         style={{zIndex: -1}}
                         onScroll={Animated.event(
                             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
                             {
-                            useNativeDriver: false,
+                            useNativeDriver: true,
                             listener: this.onScroll
                             },
                         )}
