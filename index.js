@@ -55,7 +55,10 @@ class CollapsingHeader extends Component {
                 </Animated.View>
 
                     <Animated.ScrollView
-                        contentContainerStyle={[{paddingTop: this.props.headerMaxHeight},this.props.contentContainerStyle]} 
+                        contentContainerStyle={[{paddingTop: this.props.headerMaxHeight},this.props.contentContainerStyle]}
+                        scrollIndicatorInsets={{
+                            top: this.props.headerMaxHeight
+                        }} 
                         scrollEventThrottle={this.props.scrollEventThrottle}
                         bounces={false}
                         style={{zIndex: -1}}
@@ -76,8 +79,7 @@ class CollapsingHeader extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: 'column',
-      alignItems: 'center',
+      flexDirection: 'column'
     },
     header: {
         position: 'absolute',
@@ -93,7 +95,8 @@ const styles = StyleSheet.create({
           height: 0
         },
         shadowRadius: 4,
-        shadowOpacity: 1
+        shadowOpacity: 1,
+        elevation: 7
     },
     contentContainer: {
         width,
