@@ -47,7 +47,7 @@ class CollapsingHeader extends Component {
         })
 
         return (
-            <Animated.View style={[styles.container]}>
+            <View style={[styles.container]}>
                 <Animated.View style={[styles.header,{height: this.props.headerMaxHeight, shadowOpacity: this.state.showScrollShadow ? 1 : 0, elevation: this.state.showScrollShadow ? 7 : 0},
                     {transform: [{
                         translateY: headerPosition
@@ -79,7 +79,7 @@ class CollapsingHeader extends Component {
                     >
                         {this.props.children}
                     </Animated.ScrollView>
-            </Animated.View>)
+            </View>)
     }
 }
 
